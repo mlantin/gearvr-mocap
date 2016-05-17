@@ -19,8 +19,10 @@ public class CubeMotion : MonoBehaviour {
 	}
 
 	void handleMocap(Google.Protobuf.VRCom.MocapSubject msg) {
-		newpos.Set (-msg.Pos.X/1000, msg.Pos.Y/1000, msg.Pos.Z/1000);
-		newrot.Set (msg.Rot.X, msg.Rot.Y, msg.Rot.Z, msg.Rot.Z);
+		// the data coming in is OpenGL convention, X Right, Y UP, Z Backward
+		// Unity is 
+		newpos.Set (msg.Pos.X/1000, msg.Pos.Y/1000, -msg.Pos.Z/1000);
+		newrot.Set (msg.Rot.X, msg.Rot.Y, msg.Rot.Z, -msg.Rot.Z);
 
 	}
 

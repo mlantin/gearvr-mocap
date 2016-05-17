@@ -18,8 +18,10 @@ public class Roaming : MonoBehaviour {
 	}
 
 	void handleMocap(Google.Protobuf.VRCom.MocapSubject head) {
-		newpos.Set (-head.Pos.X/1000, head.Pos.Y/1000, head.Pos.Z/1000);
-		newrot.Set (head.Rot.X, head.Rot.Y, head.Rot.Z, head.Rot.W);
+		// the data coming in is OpenGL convention, X Right, Y UP, Z Backward
+		// Unity is the same but with Z pointing forward.
+		newpos.Set (head.Pos.X/1000, head.Pos.Y/1000, -head.Pos.Z/1000);
+		newrot.Set (head.Rot.X, head.Rot.Y, head.Rot.Z, -head.Rot.W);
 
 	}
 }
