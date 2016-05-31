@@ -88,6 +88,9 @@ public class OVRTracker
 				return;
 
 			OVRPlugin.position = value;
+			//Maria Lantin: Trying to disable rotation
+			//Note: didn't work. crashed Unity on start up
+			//OVRPlugin.rotation = value;
 		}
 	}
 
@@ -128,7 +131,9 @@ public class OVRTracker
 			return OVRPose.identity;
 
 		var p = OVRPlugin.GetTrackerPose((OVRPlugin.Tracker)tracker).ToOVRPose();
-		
+
+		//return OVRPose.identity;
+
 		return new OVRPose()
 		{
 			position = p.position,

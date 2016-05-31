@@ -8,21 +8,21 @@ public class CubeMotion : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SocketDispatch.On ("BALL", handleMocap);
+		SocketDispatch.On ("Wii", handleMocap);
 		SocketDispatch.On (Google.Protobuf.VRCom.Update.VrmsgOneofCase.Hydra, handleHydra);
 	}
 		
 	// Update is called once per frame
 	void Update () {
-		transform.position = newpos;
-		transform.rotation = newrot;
+		transform.localPosition = newpos;
+		transform.localRotation = newrot;
 	}
 
 	void handleMocap(Google.Protobuf.VRCom.MocapSubject msg) {
 		// the data coming in from the websocket is OpenGL convention, X Right, Y UP, Z Backward
 		// Unity is the same but with Z pointing forward. So we are mirroring about the XY plane.
 		newpos.Set (msg.Pos.X/1000, msg.Pos.Y/1000, -msg.Pos.Z/1000);
-		newrot.Set (msg.Rot.X, msg.Rot.Y, -msg.Rot.Z, -msg.Rot.Z);
+		newrot.Set (msg.Rot.X, msg.Rot.Y, -msg.Rot.Z, -msg.Rot.W);
 
 	}
 
