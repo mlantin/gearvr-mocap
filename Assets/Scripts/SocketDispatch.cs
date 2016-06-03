@@ -51,7 +51,7 @@ public class SocketDispatch : MonoBehaviour {
 			{
 				if (msg.Type == WebSocketSharp.Opcode.Binary) {
 					updateMsg.ClearVrmsg ();
-					updateMsg.MergeFrom (new Google.Protobuf.CodedInputStream(msg.RawData));
+					updateMsg.MergeFrom (new Google.Protobuf.CodedInputStream (msg.RawData));
 					Google.Protobuf.VRCom.Update.VrmsgOneofCase msgType = updateMsg.VrmsgCase;
 					switch (msgType) {
 					case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Mocap:
@@ -59,8 +59,8 @@ public class SocketDispatch : MonoBehaviour {
 							OnMocapMsg (updateMsg);
 						Google.Protobuf.Collections.MapField<string, Google.Protobuf.VRCom.MocapSubject> subjects = updateMsg.Mocap.Subjects;
 						foreach (KeyValuePair<string,MocapHandler> pair in mocapHandlers) {
-							if (subjects.ContainsKey(pair.Key))
-								mocapHandlers[pair.Key](subjects[pair.Key]);
+							if (subjects.ContainsKey (pair.Key))
+								mocapHandlers [pair.Key] (subjects [pair.Key]);
 						}
 						break;
 					case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Hydra:
@@ -75,6 +75,9 @@ public class SocketDispatch : MonoBehaviour {
 						Debug.Log ("Received an unknown or empty message");
 						break;
 					}
+				} else {
+					//jmsg = JsonUtility.FromJson (msg.Data);
+					Debug.Log(msg.Data);
 				}
 			}
 			if (w.error != null)
