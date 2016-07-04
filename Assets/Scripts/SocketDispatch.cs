@@ -35,58 +35,55 @@ public class SocketDispatch : MonoBehaviour {
 	static Dictionary <string, MocapHandler> mocapHandlers = new Dictionary<string,MocapHandler>();
 
 	public string address = "ws://127.0.0.1:4567";
-	WebSocket w;
-	Google.Protobuf.VRCom.Update updateMsg = new Google.Protobuf.VRCom.Update();
+	WebSocketSharp.WebSocket w;
+	bool socketIsConnected = false;
+	string socketError = null;
 
+	// for reading the generic message
+	Google.Protobuf.VRCom.Update updateMsg = new Google.Protobuf.VRCom.Update();
+	// keep only the last mocap message received
+	Google.Protobuf.VRCom.Update mocapMsg = null;
+	// keep only the last hydra message received
+	Google.Protobuf.VRCom.Update hydraMsg = null;
+	// keep a queue of wiimote messages
+	Queue<Google.Protobuf.VRCom.Update> wiimoteMsgs = new Queue<Google.Protobuf.VRCom.Update>();
+	// Used in the dispatch loop
+	Google.Protobuf.VRCom.Update currMsg = null;
+
+	System.Object updateLock = new System.Object();
 
 	// Use this for initialization
 	IEnumerator Start () {
-		w = new WebSocket(new Uri(address));
-		yield return StartCoroutine(w.Connect());
-		w.SendString ("{ \"username\":\"" + SystemInfo.deviceUniqueIdentifier + "\"}" );
-		while (true)
+		
+		yield return StartCoroutine(ConnectWebsocket());
+		w.Send ("{ \"username\":\"" + SystemInfo.deviceUniqueIdentifier + "\"}" );
+		while (socketError == null)
 		{
-			WebSocketSharp.MessageEventArgs msg = w.Recv();
-			if (msg != null)
-			{
-				if (msg.Type == WebSocketSharp.Opcode.Binary) {
-					updateMsg.ClearVrmsg ();
-					updateMsg.MergeFrom (new Google.Protobuf.CodedInputStream (msg.RawData));
-					Google.Protobuf.VRCom.Update.VrmsgOneofCase msgType = updateMsg.VrmsgCase;
-					switch (msgType) {
-					case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Mocap:
-						if (OnMocapMsg != null)
-							OnMocapMsg (updateMsg);
-						Google.Protobuf.Collections.MapField<string, Google.Protobuf.VRCom.MocapSubject> subjects = updateMsg.Mocap.Subjects;
-						foreach (KeyValuePair<string,MocapHandler> pair in mocapHandlers) {
-							if (subjects.ContainsKey (pair.Key))
-								mocapHandlers [pair.Key] (subjects [pair.Key]);
-						}
-						break;
-					case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Hydra:
-						if (OnHydraMsg != null)
-							OnHydraMsg (updateMsg);
-						break;
-					case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Wiimote:
-						if (OnWiimoteMsg != null)
-							OnWiimoteMsg (updateMsg);
-						break;
-					default:
-						Debug.Log ("Received an unknown or empty message");
-						break;
+			lock (updateLock) {
+				if (mocapMsg != null) {
+					if (OnMocapMsg != null)
+						OnMocapMsg (mocapMsg);
+					Google.Protobuf.Collections.MapField<string, Google.Protobuf.VRCom.MocapSubject> subjects = mocapMsg.Mocap.Subjects;
+					foreach (KeyValuePair<string,MocapHandler> pair in mocapHandlers) {
+						if (subjects.ContainsKey (pair.Key))
+							mocapHandlers [pair.Key] (subjects [pair.Key]);
 					}
-				} else {
-					//jmsg = JsonUtility.FromJson (msg.Data);
-					Debug.Log(msg.Data);
+					mocapMsg = null;
+				}		
+				if (hydraMsg != null) {
+					if (OnHydraMsg != null)
+						OnHydraMsg (hydraMsg);
+					hydraMsg = null;
 				}
-			}
-			if (w.error != null)
-			{
-				Debug.LogError ("Error: "+w.error);
-				break;
+				while (wiimoteMsgs.Count != 0) {
+					currMsg = wiimoteMsgs.Dequeue ();
+					if (OnWiimoteMsg != null)
+						OnWiimoteMsg (currMsg);
+				} 
 			}
 			yield return 0;
 		}
+		Debug.LogError ("Error: "+socketError);
 		w.Close();
 	}
 	
@@ -118,7 +115,49 @@ public class SocketDispatch : MonoBehaviour {
 	}
 
 	void OnApplicationQuit() {
-		Debug.Log (w.m_Messages.Count);
 		w.Close ();
+	}
+
+	public IEnumerator ConnectWebsocket()
+	{
+		//maybe need to add some code here to check protocol of URI to make sure
+		// it is "ws" or "wss". Not sure what happens when you throw an exception
+		// in a monobehavior function.
+		w = new WebSocketSharp.WebSocket(address.ToString());
+		w.OnMessage += gotMessage;
+		w.OnOpen += (sender, e) => socketIsConnected = true;
+		w.OnError += (sender, e) => socketError = e.Message;
+		w.ConnectAsync();
+		while (!socketIsConnected && socketError == null)
+			yield return 0;
+	}
+
+	public void gotMessage(object sender, WebSocketSharp.MessageEventArgs msg) {
+
+		if (msg.Type == WebSocketSharp.Opcode.Binary) {
+			lock (updateLock) {
+				updateMsg.ClearVrmsg ();
+				updateMsg.MergeFrom (new Google.Protobuf.CodedInputStream (msg.RawData));
+				Google.Protobuf.VRCom.Update.VrmsgOneofCase msgType = updateMsg.VrmsgCase;
+				switch (msgType) {
+				case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Mocap:
+					mocapMsg = updateMsg;
+					break;
+				case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Hydra:
+					hydraMsg = updateMsg;
+					break;
+				case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Wiimote:
+					wiimoteMsgs.Enqueue (updateMsg);
+					break;
+				default:
+					Debug.Log ("Received an unknown or empty message");
+					break;
+				}
+			}
+		} else {
+			//jmsg = JsonUtility.FromJson (msg.Data);
+			Debug.Log(msg.Data);
+		}	
+		
 	}
 }

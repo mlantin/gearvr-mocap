@@ -8,7 +8,7 @@ public class CubeMotion : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SocketDispatch.On ("Wii", handleMocap);
+		SocketDispatch.On ("test", handleMocap);
 		SocketDispatch.On (Google.Protobuf.VRCom.Update.VrmsgOneofCase.Hydra, handleHydra);
 	}
 		
