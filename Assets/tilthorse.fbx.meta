@@ -1,0 +1,158 @@
+fileFormatVersion: 2
+guid: fe2417206d6294717aa6ea12cd7bf2a6
+timeCreated: 1466730966
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: All Coarse Bristles
+    100002: All Duct Tape
+    100004: All Fire
+    100006: All Highlighter
+    100008: All Hypercolor
+    100010: All Ink
+    100012: All Leaves
+    100014: All Light
+    100016: All Marker
+    100018: All Oil Paint
+    100020: All Paper
+    100022: All Plasma
+    100024: All Rainbow
+    100026: All Splatter
+    100028: All Streamers
+    100030: All Thick Paint
+    100032: All Wire
+    100034: //RootNode
+    400000: All Coarse Bristles
+    400002: All Duct Tape
+    400004: All Fire
+    400006: All Highlighter
+    400008: All Hypercolor
+    400010: All Ink
+    400012: All Leaves
+    400014: All Light
+    400016: All Marker
+    400018: All Oil Paint
+    400020: All Paper
+    400022: All Plasma
+    400024: All Rainbow
+    400026: All Splatter
+    400028: All Streamers
+    400030: All Thick Paint
+    400032: All Wire
+    400034: //RootNode
+    2300000: All Coarse Bristles
+    2300002: All Duct Tape
+    2300004: All Fire
+    2300006: All Highlighter
+    2300008: All Hypercolor
+    2300010: All Ink
+    2300012: All Leaves
+    2300014: All Light
+    2300016: All Marker
+    2300018: All Oil Paint
+    2300020: All Paper
+    2300022: All Plasma
+    2300024: All Rainbow
+    2300026: All Splatter
+    2300028: All Streamers
+    2300030: All Thick Paint
+    2300032: All Wire
+    3300000: All Coarse Bristles
+    3300002: All Duct Tape
+    3300004: All Fire
+    3300006: All Highlighter
+    3300008: All Hypercolor
+    3300010: All Ink
+    3300012: All Leaves
+    3300014: All Light
+    3300016: All Marker
+    3300018: All Oil Paint
+    3300020: All Paper
+    3300022: All Plasma
+    3300024: All Rainbow
+    3300026: All Splatter
+    3300028: All Streamers
+    3300030: All Thick Paint
+    3300032: All Wire
+    4300000: All Oil Paint
+    4300002: All Paper
+    4300004: All Marker
+    4300006: All Light
+    4300008: All Fire
+    4300010: All Streamers
+    4300012: All Wire
+    4300014: All Duct Tape
+    4300016: All Hypercolor
+    4300018: All Leaves
+    4300020: All Thick Paint
+    4300022: All Plasma
+    4300024: All Splatter
+    4300026: All Highlighter
+    4300028: All Ink
+    4300030: All Rainbow
+    4300032: All Coarse Bristles
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
