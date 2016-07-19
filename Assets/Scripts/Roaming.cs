@@ -6,7 +6,7 @@ public class Roaming : MonoBehaviour {
 
 	public GameObject worldOrigin;
 
-	Vector3 newpos = new Vector3();
+	Vector3 newpos = new Vector3(0f,1.6f,0f);
 	Quaternion newrot = new Quaternion();
 	bool havemocap = false;
 	bool trackingspaceSet = false;
