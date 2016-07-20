@@ -12,15 +12,9 @@ public class makeaword : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Y)) {
-			Vector3 pos = new Vector3 (0f, 1f, 1f);
-			makeword("yes",100f,pos,Quaternion.identity);
-			AudioSource audio = GetComponent<AudioSource>();
-			audio.Play();
-		}
 	}
 
-	void makeword(string word, float scale, Vector3 pos, Quaternion rot) {
+	public void makeword(string word, float scale, Vector3 pos, Quaternion rot, AudioClip clip) {
 		GameObject newword = new GameObject (word);
 		newword.transform.parent = transform;
 
@@ -31,12 +25,19 @@ public class makeaword : MonoBehaviour {
 		Vector3 letterscale = new Vector3 (1f, 1f, 1f);
 
 		newword.transform.localScale = scalevec;
-		newword.transform.localPosition = pos;
-		newword.transform.localRotation = rot;
+		newword.transform.position = pos;
+		newword.transform.rotation = rot;
+
+		AudioSource wordsource = newword.AddComponent<AudioSource>();
+		wordsource.clip = clip;
+		wordsource.loop = false;
+
 
 		MeshFilter[] letters = alphabet.GetComponentsInChildren<MeshFilter> ();
 		Vector3 lettercentre;
-		Vector3 extent;
+		Vector3 extent = new Vector3();
+		Vector3 boxsize = new Vector3 ();
+		Vector3 boxcentre = new Vector3 ();
 		foreach (char c in word) {
 			foreach (MeshFilter letter in letters) {
 				if (letter.name == c.ToString()) {
@@ -45,13 +46,25 @@ public class makeaword : MonoBehaviour {
 					newletter.name = c.ToString ();
 					newletter.transform.parent = newword.transform;
 					newletter.transform.localScale = letterscale;
+					newletter.transform.localRotation = Quaternion.identity;
 					lettercentre = letter.sharedMesh.bounds.center;
 					extent = letter.sharedMesh.bounds.extents;
-					newletter.transform.localPosition = letterpos-lettercentre;
+					boxsize.Set (boxsize.x + extent.x * 2, Mathf.Max (boxsize.y, extent.y*2), Mathf.Max (boxsize.z, extent.z * 2));
+					newletter.transform.localPosition = letterpos-lettercentre+extent;
 					letterpos.x += extent.x*2;
 					break;
 				}
 			}
 		}
+		Rigidbody rb = newword.AddComponent<Rigidbody> ();
+		rb.useGravity = false;
+		rb.constraints = RigidbodyConstraints.FreezeAll;
+
+		BoxCollider bc = newword.AddComponent<BoxCollider> ();
+		bc.size = boxsize;
+		bc.center = boxsize / 2.0f;
+
+		newword.AddComponent <WordInteraction>();
+		wordsource.Play ();
 	}
 }

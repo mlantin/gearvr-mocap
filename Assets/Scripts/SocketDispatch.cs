@@ -3,24 +3,33 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class WiimoteButtons {
-	static uint WIIMOTE_BUTTON_TWO	= 0x0001;
-	static uint WIIMOTE_BUTTON_ONE	= 0x0002;
-	static uint WIIMOTE_BUTTON_B	= 0x0004;
-	static uint WIIMOTE_BUTTON_A	= 0x0008;
-	static uint WIIMOTE_BUTTON_MINUS = 0x0010;
-	static uint WIIMOTE_BUTTON_ZACCEL_BIT6 = 0x0020;
-	static uint WIIMOTE_BUTTON_ZACCEL_BIT7 = 0x0040;
-	static uint WIIMOTE_BUTTON_HOME = 0x0080;
-	static uint WIIMOTE_BUTTON_LEFT = 0x0100;
-	static uint WIIMOTE_BUTTON_RIGHT	= 0x0200;
-	static uint WIIMOTE_BUTTON_DOWN = 0x0400;
-	static uint WIIMOTE_BUTTON_UP = 0x0800;
-	static uint WIIMOTE_BUTTON_PLUS = 0x1000;
-	static uint WIIMOTE_BUTTON_ZACCEL_BIT4 = 0x2000;
-	static uint WIIMOTE_BUTTON_ZACCEL_BIT5 = 0x4000;
-	static uint WIIMOTE_BUTTON_UNKNOWN	= 0x8000;
-	static uint WIIMOTE_BUTTON_ALL = 0x1F9F;
+public class ControllerButtons {
+	public static uint WIIMOTE_BUTTON_TWO	= 0x0001;
+	public static uint WIIMOTE_BUTTON_ONE	= 0x0002;
+	public static uint WIIMOTE_BUTTON_B	= 0x0004;
+	public static uint WIIMOTE_BUTTON_A	= 0x0008;
+	public static uint WIIMOTE_BUTTON_MINUS = 0x0010;
+	public static uint WIIMOTE_BUTTON_ZACCEL_BIT6 = 0x0020;
+	public static uint WIIMOTE_BUTTON_ZACCEL_BIT7 = 0x0040;
+	public static uint WIIMOTE_BUTTON_HOME = 0x0080;
+	public static uint WIIMOTE_BUTTON_LEFT = 0x0100;
+	public static uint WIIMOTE_BUTTON_RIGHT	= 0x0200;
+	public static uint WIIMOTE_BUTTON_DOWN = 0x0400;
+	public static uint WIIMOTE_BUTTON_UP = 0x0800;
+	public static uint WIIMOTE_BUTTON_PLUS = 0x1000;
+	public static uint WIIMOTE_BUTTON_ZACCEL_BIT4 = 0x2000;
+	public static uint WIIMOTE_BUTTON_ZACCEL_BIT5 = 0x4000;
+	public static uint WIIMOTE_BUTTON_UNKNOWN	= 0x8000;
+	public static uint WIIMOTE_BUTTON_ALL = 0x1F9F;
+
+	public static uint SIXENSE_BUTTON_BUMPER =  (0x01<<7);
+	public static uint SIXENSE_BUTTON_JOYSTICK =(0x01<<8);
+	public static uint SIXENSE_BUTTON_1   =     (0x01<<5);
+	public static uint SIXENSE_BUTTON_2   =     (0x01<<6);
+	public static uint SIXENSE_BUTTON_3   =     (0x01<<3);
+	public static uint SIXENSE_BUTTON_4   =     (0x01<<4);
+	public static uint SIXENSE_BUTTON_START =   (0x01<<0);
+
 };
 
 public class SocketDispatch : MonoBehaviour {
