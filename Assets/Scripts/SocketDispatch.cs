@@ -156,7 +156,7 @@ public class SocketDispatch : MonoBehaviour {
 					hydraMsg = updateMsg;
 					break;
 				case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Wiimote:
-					wiimoteMsgs.Enqueue (updateMsg);
+					wiimoteMsgs.Enqueue (updateMsg.Clone());
 					break;
 				default:
 					Debug.Log ("Received an unknown or empty message");

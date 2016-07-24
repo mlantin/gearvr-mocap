@@ -55,7 +55,7 @@ public class Roaming : MonoBehaviour {
 	}
 
 	void handleMocap(Google.Protobuf.VRCom.MocapSubject head) {
-		Debug.Log ("mocap data");
+		//Debug.Log ("mocap data");
 		// the data coming in is OpenGL convention, X Right, Y UP, Z Backward
 		// Unity is the same but with Z pointing forward.
 		havemocap = true;

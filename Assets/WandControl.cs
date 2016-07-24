@@ -10,9 +10,9 @@ public class WandControl : MonoBehaviour {
 	Dictionary<string,AudioClip> wordclips = new Dictionary<string,AudioClip>();
 
 	makeaword wordmakerScript = null;
-	Vector3 hydrapos;
+	Vector3 wandpos;
 	Vector3 wordpos;
-	Quaternion hydrarot = new Quaternion();
+	Quaternion wandrot = new Quaternion();
 	bool makeword1 = false;
 
 	// Use this for initialization
@@ -22,6 +22,8 @@ public class WandControl : MonoBehaviour {
 
 		wordmakerScript = wordmaker.GetComponent<MonoBehaviour>() as makeaword;
 		SocketDispatch.On (Google.Protobuf.VRCom.Update.VrmsgOneofCase.Hydra, handleHydra);
+		SocketDispatch.On (Google.Protobuf.VRCom.Update.VrmsgOneofCase.Wiimote, handleWii);
+		SocketDispatch.On ("Wii", handleWiiMocap);
 	}
 
 	// Update is called once per frame
@@ -31,10 +33,10 @@ public class WandControl : MonoBehaviour {
 
 	void handleHydra(Google.Protobuf.VRCom.Update msg) {
 		if (msg.Hydra.CtrlNum == 0) {
-			hydrapos.Set (msg.Hydra.Pos.X/1000, msg.Hydra.Pos.Y/1000, -msg.Hydra.Pos.Z/1000);
-			hydrarot.Set (msg.Hydra.Rot.X, msg.Hydra.Rot.Y, -msg.Hydra.Rot.Z, -msg.Hydra.Rot.W);
-			transform.localPosition = hydrapos;
-			transform.localRotation = hydrarot;
+			wandpos.Set (msg.Hydra.Pos.X/1000, msg.Hydra.Pos.Y/1000, msg.Hydra.Pos.Z/1000);
+			wandrot.Set (msg.Hydra.Rot.X, msg.Hydra.Rot.Y, -msg.Hydra.Rot.Z, -msg.Hydra.Rot.W);
+			transform.localPosition = wandpos;
+			transform.localRotation = wandrot;
 
 			if ((msg.Hydra.Buttons & ControllerButtons.SIXENSE_BUTTON_1) != 0) {
 				if (!makeword1) {
@@ -43,8 +45,24 @@ public class WandControl : MonoBehaviour {
 			} else if (makeword1) {
 				makeword1 = false;
 				wordpos = transform.position+transform.forward*.30f;
-				wordmakerScript.makeword ("yes", 100f, wordpos, transform.rotation, wordclips["yes"]);
+				wordmakerScript.makeword ("yes", 0.1f, wordpos, transform.rotation, wordclips["yes"]);
 			}
 		}
+	}
+
+	void handleWii(Google.Protobuf.VRCom.Update msg) {
+		if ((msg.Wiimote.ButtonsPressed & ControllerButtons.WIIMOTE_BUTTON_DOWN) != 0) {
+			wordmakerScript.makeword ("no", 0.1f, wordpos,transform.rotation, wordclips ["no"]);
+		} else if ((msg.Wiimote.ButtonsPressed & ControllerButtons.WIIMOTE_BUTTON_UP) != 0) {
+			wordmakerScript.makeword ("yes", 0.1f, wordpos, transform.rotation, wordclips ["yes"]);
+		}
+	}
+
+	void handleWiiMocap(Google.Protobuf.VRCom.MocapSubject wii) {
+		wandpos.Set (wii.Pos.X / 1000, wii.Pos.Y / 1000, -wii.Pos.Z / 1000);
+		wandrot.Set (wii.Rot.X, wii.Rot.Y, -wii.Rot.Z, -wii.Rot.W);
+		transform.localPosition = wandpos;
+		transform.localRotation = wandrot;
+		wordpos = transform.position+transform.forward*.30f;
 	}
 }

@@ -37,7 +37,6 @@ public class makeaword : MonoBehaviour {
 		Vector3 lettercentre;
 		Vector3 extent = new Vector3();
 		Vector3 boxsize = new Vector3 ();
-		Vector3 boxcentre = new Vector3 ();
 		foreach (char c in word) {
 			foreach (MeshFilter letter in letters) {
 				if (letter.name == c.ToString()) {
@@ -64,7 +63,6 @@ public class makeaword : MonoBehaviour {
 		bc.size = boxsize;
 		bc.center = boxsize / 2.0f;
 
-		newword.AddComponent <WordInteraction>();
 		wordsource.Play ();
 	}
 }
