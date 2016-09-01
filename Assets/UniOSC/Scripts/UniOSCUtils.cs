@@ -100,7 +100,7 @@ namespace UniOSC{
 		/// <summary>
 		/// Validates the IP address.
 		/// </summary>
-		/// <returns><c>true</c>, if IP adress was validated, <c>false</c> otherwise.</returns>
+		/// <returns><c>true</c>, if IP address was validated, <c>false</c> otherwise.</returns>
 		/// <param name="strIP">String I.</param>
 		/// <param name="address">Address.</param>
 		public static bool ValidateIPAddress(string strIP, out IPAddress  address){
