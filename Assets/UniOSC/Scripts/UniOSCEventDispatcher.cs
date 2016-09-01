@@ -283,7 +283,7 @@ namespace UniOSC{
 			
 		protected void _DisconnectFromOSCConnections(){
 			_myOSCConnections.Clear();
-			if(_explicitConnection != null) _explicitConnection.ConnectionOutStatusChange-=_OnConnectionOutStatusChanged;//saftey
+			if(_explicitConnection != null) _explicitConnection.ConnectionOutStatusChange-=_OnConnectionOutStatusChanged;//safety
 		}
 
 		public virtual void OnDestroy(){
