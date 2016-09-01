@@ -157,7 +157,7 @@ public class UniOSCClassBasedDemo : MonoBehaviour {
 		oscDispatcher2.AppendData("TEST2");
 		oscDispatcher2.AppendData("TEST2.1");
 
-		// We want sent continously data so start our timer to set a flag at a given interval
+		// We want sent continuously data so start our timer to set a flag at a given interval
 		// The interval is in milliseconds.
 		StartSendIntervalTimer();
 	}
