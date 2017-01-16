@@ -85,9 +85,8 @@ public class SocketDispatch : MonoBehaviour {
 					hydraMsg = null;
 				}
 				while (wiimoteMsgs.Count != 0) {
-					currMsg = wiimoteMsgs.Dequeue ();
 					if (OnWiimoteMsg != null)
-						OnWiimoteMsg (currMsg);
+						OnWiimoteMsg (wiimoteMsgs.Dequeue());
 				} 
 			}
 			yield return 0;
@@ -150,10 +149,10 @@ public class SocketDispatch : MonoBehaviour {
 				Google.Protobuf.VRCom.Update.VrmsgOneofCase msgType = updateMsg.VrmsgCase;
 				switch (msgType) {
 				case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Mocap:
-					mocapMsg = updateMsg;
+					mocapMsg = updateMsg.Clone();
 					break;
 				case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Hydra:
-					hydraMsg = updateMsg;
+					hydraMsg = updateMsg.Clone();
 					break;
 				case Google.Protobuf.VRCom.Update.VrmsgOneofCase.Wiimote:
 					wiimoteMsgs.Enqueue (updateMsg.Clone());

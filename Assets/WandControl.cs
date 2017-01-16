@@ -28,7 +28,9 @@ public class WandControl : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		transform.localPosition = wandpos;
+		transform.localRotation = wandrot;
+		wordpos = transform.position+transform.up*.30f;
 	}
 
 	void handleHydra(Google.Protobuf.VRCom.Update msg) {
@@ -52,17 +54,14 @@ public class WandControl : MonoBehaviour {
 
 	void handleWii(Google.Protobuf.VRCom.Update msg) {
 		if ((msg.Wiimote.ButtonsPressed & ControllerButtons.WIIMOTE_BUTTON_DOWN) != 0) {
-			wordmakerScript.makeword ("no", 0.1f, wordpos,transform.rotation, wordclips ["no"]);
+			wordmakerScript.makeword ("no", 0.1f, wordpos,Quaternion.AngleAxis(90,new Vector3(0,1,0)), wordclips ["no"]);
 		} else if ((msg.Wiimote.ButtonsPressed & ControllerButtons.WIIMOTE_BUTTON_UP) != 0) {
-			wordmakerScript.makeword ("yes", 0.1f, wordpos, transform.rotation, wordclips ["yes"]);
+			wordmakerScript.makeword ("yes", 0.1f, wordpos, transform.rotation*Quaternion.AngleAxis(90,new Vector3(0,1,0)), wordclips ["yes"]);
 		}
 	}
 
 	void handleWiiMocap(Google.Protobuf.VRCom.MocapSubject wii) {
 		wandpos.Set (wii.Pos.X / 1000, wii.Pos.Y / 1000, -wii.Pos.Z / 1000);
 		wandrot.Set (wii.Rot.X, wii.Rot.Y, -wii.Rot.Z, -wii.Rot.W);
-		transform.localPosition = wandpos;
-		transform.localRotation = wandrot;
-		wordpos = transform.position+transform.forward*.30f;
 	}
 }
