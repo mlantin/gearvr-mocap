@@ -273,7 +273,7 @@ namespace UniOSC{
 				kvp.Key.OSCMessageReceived-= _OnOSCMessageReceived;
 			}
 			ConnectToDict.Clear();
-			if(_explicitConnection != null) _explicitConnection.ConnectionInStatusChange-=_OnConnectionInStatusChanged;//saftey
+			if(_explicitConnection != null) _explicitConnection.ConnectionInStatusChange-=_OnConnectionInStatusChanged;//safety
 		}
 
 

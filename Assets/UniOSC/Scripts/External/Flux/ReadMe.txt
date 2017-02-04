@@ -3,7 +3,7 @@ HowTo:
 1.Create an UniOSCConnection 
 2.Open the Flux timeline editor and the Flux inspector. (Window/Flux/)
 3. Create a Sequence in the Flux editor.
-4. Drag the UniOSCConnection from the Hierachy into the Flux timeline.
+4. Drag the UniOSCConnection from the Hierarchy into the Flux timeline.
 5.Click on the little '+' sign at the new  created timeline entry
 6. Goto 'OSC' and choose one of the event types:
 

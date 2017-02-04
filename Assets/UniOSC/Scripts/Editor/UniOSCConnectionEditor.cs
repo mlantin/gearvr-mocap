@@ -356,7 +356,7 @@ namespace UniOSC{
                     }
                     else
                     {
-                        EditorUtility.DisplayDialog("Invalid IP Address", "The IPAddress you have choosen is not valid! Please use a different.", "OK");
+                        EditorUtility.DisplayDialog("Invalid IP Address", "The IPAddress you have chosen is not valid! Please use a different.", "OK");
                     }
                   
                 }
@@ -419,7 +419,7 @@ namespace UniOSC{
                         {
 							oscConnection.ConnectOSCOut();
 						}else{
-							 EditorUtility.DisplayDialog("Invalid IP Address", "The IPAddress you have choosen is not valid! Please use a different.", "OK");
+							 EditorUtility.DisplayDialog("Invalid IP Address", "The IPAddress you have chosen is not valid! Please use a different.", "OK");
 
 						}
 						

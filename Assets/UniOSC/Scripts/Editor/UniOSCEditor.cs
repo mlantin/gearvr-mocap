@@ -110,7 +110,7 @@ namespace UniOSC{
 
 		/// <summary>
 		/// Init this instance.
-		/// Called everytime the editor is opened or when we have to update the editor (After creating a OSCConnection,hit the 'Refresh' button) 
+		/// Called every time the editor is opened or when we have to update the editor (After creating a OSCConnection,hit the 'Refresh' button) 
 		/// </summary>
 		public static void Init(){
 

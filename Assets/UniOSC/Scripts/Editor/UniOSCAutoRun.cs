@@ -15,7 +15,7 @@ public class UniOSCAutoRun
 {
 	/// <summary>
 	/// Is called when open the Unity editor, or after recompilation.
-	/// Triggers some initialization routines so everthing is displayed correctly on startup.
+	/// Triggers some initialization routines so everything is displayed correctly on startup.
 	/// </summary>
 	static  UniOSCAutoRun()
 	{

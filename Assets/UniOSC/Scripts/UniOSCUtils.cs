@@ -100,7 +100,7 @@ namespace UniOSC{
 		/// <summary>
 		/// Validates the IP address.
 		/// </summary>
-		/// <returns><c>true</c>, if IP adress was validated, <c>false</c> otherwise.</returns>
+		/// <returns><c>true</c>, if IP address was validated, <c>false</c> otherwise.</returns>
 		/// <param name="strIP">String I.</param>
 		/// <param name="address">Address.</param>
 		public static bool ValidateIPAddress(string strIP, out IPAddress  address){
@@ -299,7 +299,7 @@ namespace UniOSC{
 			/// Used to get assets of a certain type and file extension from entire project
 			/// </summary>
 			/// <returns>An Object array of assets.</returns>
-			/// <param name="fileExtension">The file extention the type uses eg ".prefab" or ".asset".</param>
+			/// <param name="fileExtension">The file extension the type uses eg ".prefab" or ".asset".</param>
 			/// <typeparam name="T">The 1st type parameter.</typeparam>
 			public static T[] GetAssetsOfType<T>( string fileExtension) where T:class
 			{
